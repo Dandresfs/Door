@@ -13,9 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from Door.settings import base as settings
+from django.conf.urls.static import static
+from Door.settings import development as develop_settings
+
 
 urlpatterns = [
+    url(r'^', include('realtime.urls', namespace='realtime')),
     url(r'^admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(develop_settings.MEDIA_URL, document_root=develop_settings.MEDIA_ROOT)

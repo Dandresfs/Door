@@ -1,0 +1,3 @@
+{% load staticfiles %}
+<!DOCTYPE html><html lang="es"><head><title></title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"/><script src="{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js'%}"></script></head><body><script src="{% static 'bower_components/jquery/dist/jquery.min.js'%}"></script><script src="{% static 'bower_components/reconnectingWebsocket/reconnecting-websocket.min.js'%}"></script><script>Notification.requestPermission()
+socket = new ReconnectingWebSocket("ws://" + window.location.host + "/");</script></body></html>

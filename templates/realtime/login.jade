@@ -1,0 +1,65 @@
+extends ../base
+
+block title
+    | Iniciar Sesión
+
+block head_content
+    link(rel="import",href="{% static 'bower_components/paper-material/paper-material.html'%}")
+    link(rel="import",href="{% static 'bower_components/gold-email-input/gold-email-input.html'%}")
+    link(rel="import",href="{% static 'bower_components/paper-input/paper-input.html'%}")
+    link(rel="import",href="{% static 'bower_components/paper-button/paper-button.html'%}")
+    link(rel="import",href="{% static 'bower_components/paper-toast/paper-toast.html'%}")
+    style(is="custom-style")
+        | #submit{
+        |   --paper-button:{
+        |       background: #008000;
+        |       color: white;
+        |   }
+        | }
+block body_content
+    div(class="container-fluid login-card")
+        div(class="row")
+            div(class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4")
+                paper-material(elevation="1")
+                    div(class="login-logo")
+                        img(class="img-responsive login-logo-svg center-block",src="{% static 'img/SICAN.svg'%}")
+                    div(class="login-form-container")
+                        form(id="login-form",method="POST",action="/")
+                            | {% csrf_token %}
+                            gold-email-input(label="Email",name="email",id="email",value="{{email}}",error-message="Ingrese un email valido",required,auto-validate)
+                            paper-input(label="Contraseña",type="password",name="password",id="password",required)
+                            div(class="text-right login-form-button")
+                                a(href="/recovery/") Olvido su contraseña?
+                                paper-button(onclick="submitFormLogin()",id="submit",disabled) Iniciar Sesión
+                            input(type="hidden",value="{{error}}",id="login_error_input")
+                            paper-toast(id="login_toast",text="{{error}}",duration="5000")
+block body_script
+    script.
+        $('#email').on("change", function (event) {
+            if (email.validate() == true && $('#password').val() != "") {
+                submit.disabled = false;
+            }
+            else {
+                submit.disabled = true;
+            }
+        });
+        $('#password').on("keyup", function (event) {
+            if (email.validate() == true && $('#password').val().length > 0) {
+                submit.disabled = false;
+                if (event.key == "Enter") {
+                    $("#login-form").submit();
+                }
+            }
+            else {
+                submit.disabled = true;
+            }
+        });
+        function submitFormLogin(event) {
+            $("#login-form").submit();
+        }
+        $(document).ready(function () {
+            login_toast.horizontalAlign = "right";
+            if ($('#login_error_input').val() != "") {
+                login_toast.open();
+            }
+        });

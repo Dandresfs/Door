@@ -1,0 +1,26 @@
+{
+  "name": "Door",
+  "homepage": "https://github.com/Dandresfs/Door",
+  "authors": [
+    "Dandresfs <dandresfsoto@gmail.com>"
+  ],
+  "description": "Door",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "reconnectingWebsocket": "^1.0.0",
+    "polymer": "^1.9.1",
+    "paper-elements": "^1.0.7",
+    "gold-email-input": "^1.0.9",
+    "bootstrap": "3.3.7",
+    "normalize-css": "^6.0.0"
+  }
+}

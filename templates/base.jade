@@ -1,0 +1,25 @@
+| {% load staticfiles %}
+<!DOCTYPE html>
+html(lang="es")
+    head
+        title
+            block title
+        meta(charset="utf-8")
+        meta(name="viewport",content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+        script(src="{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js'%}")
+        link(rel="shortcut icon",type='image/x-icon',href="{% static 'img/favicon.png'%}")
+        link(rel="stylesheet",href="https://fonts.googleapis.com/css?family=Lato:400,700")
+        link(rel="stylesheet",href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css'%}")
+        link(rel="stylesheet",href="{% static 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css'%}")
+        link(rel="stylesheet",href="{% static 'bower_components/normalize-css/normalize.css'%}")
+        link(rel="stylesheet",href="{% static 'css/base.css'%}")
+        block head_content
+    body
+        block body_content
+        script(src="{% static 'bower_components/jquery/dist/jquery.min.js'%}")
+        script(src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js'%}")
+        script(src="{% static 'bower_components/reconnectingWebsocket/reconnecting-websocket.min.js'%}")
+        block body_script
+        script.
+            Notification.requestPermission()
+            socket = new ReconnectingWebSocket("ws://" + window.location.host + "/");
