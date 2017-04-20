@@ -21,6 +21,15 @@ html(lang="es")
         script(src="{% static 'bower_components/reconnectingWebsocket/reconnecting-websocket.min.js'%}")
         block body_script
         script.
-            Notification.requestPermission()
+            Notification.requestPermission();
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
             socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
+
+            socket.onmessage = function (e) {
+                var noti = new Notification( "Esta es una prueba de realtime" );
+                setTimeout( function() { noti.close() }, 2000);
+            }
+
+            socket.onopen = function () {
+                socket.send('{"alejo":"prueba"}');
+            }

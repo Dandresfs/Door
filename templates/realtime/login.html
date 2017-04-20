@@ -31,6 +31,15 @@ $(document).ready(function () {
     if ($('#login_error_input').val() != "") {
         login_toast.open();
     }
-});</script><script>Notification.requestPermission()
+});</script><script>Notification.requestPermission();
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");</script></body></html>
+socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
+
+socket.onmessage = function (e) {
+    var noti = new Notification( "Esta es una prueba de realtime" );
+    setTimeout( function() { noti.close() }, 2000);
+}
+
+socket.onopen = function () {
+    socket.send('{"alejo":"prueba"}');
+}</script></body></html>
