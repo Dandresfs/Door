@@ -22,4 +22,5 @@ html(lang="es")
         block body_script
         script.
             Notification.requestPermission()
-            socket = new ReconnectingWebSocket("ws://" + window.location.host + "/");
+            var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+            socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");

@@ -32,4 +32,5 @@ $(document).ready(function () {
         login_toast.open();
     }
 });</script><script>Notification.requestPermission()
-socket = new ReconnectingWebSocket("ws://" + window.location.host + "/");</script></body></html>
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");</script></body></html>
