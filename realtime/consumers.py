@@ -31,7 +31,10 @@ class MyConsumer(JsonWebsocketConsumer):
         except:
             status = 'denied'
         else:
-            status = 'granted'
+            if employee.status == 'granted':
+                status = 'granted'
+            else:
+                status = 'denied'
         try:
             self.socket_send(status)
         except:
