@@ -57,6 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.email
 
+    def get_short_name(self):
+        return self.email
+
     def get_photo(self):
         avatar = STATIC_URL+"img/andes_user.jpg"
         return avatar
