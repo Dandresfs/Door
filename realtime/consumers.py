@@ -36,7 +36,7 @@ class MyConsumer(JsonWebsocketConsumer):
             self.socket_send(status)
         except:
             pass
-        self.group_send('realtime',content)
+        self.group_send('realtime',{'status':status})
 
     def socket_send(self,status):
         s = socket.socket()
