@@ -26,10 +26,14 @@ html(lang="es")
             socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
 
             socket.onmessage = function (e) {
-                var noti = new Notification( "Esta es una prueba de realtime" );
-                setTimeout( function() { noti.close() }, 2000);
+                var data = JSON.parse(e.data);
+                if(data.card_data != undefined){
+                    var noti = new Notification( data.card_data );
+                    setTimeout( function() { noti.close() }, 2000);
+                }
+
+                console.log(data);
             }
 
             socket.onopen = function () {
-                socket.send('{"alejo":"prueba"}');
             }
