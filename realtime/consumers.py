@@ -34,6 +34,8 @@ class MyConsumer(JsonWebsocketConsumer):
         else:
             if employee.status == 'granted':
                 status = 'granted'
+                content['first_name'] = employee.first_name
+                content['last_name'] = employee.last_name
             else:
                 status = 'denied'
         try:
