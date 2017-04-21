@@ -41,7 +41,7 @@ class MyConsumer(JsonWebsocketConsumer):
     def socket_send(self,status):
         s = socket.socket()
         s.connect(("192.168.0.2", 1234))
-        s.send("b'"+ status +"'")
+        s.send(status.encode())
         s.close()
 
 
