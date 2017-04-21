@@ -1,5 +1,6 @@
 from channels.generic.websockets import JsonWebsocketConsumer
 import socket
+from realtime.models import Employee
 
 class MyConsumer(JsonWebsocketConsumer):
 
@@ -26,15 +27,21 @@ class MyConsumer(JsonWebsocketConsumer):
         """
         # Simple echo
         try:
-            self.socket_send()
+            employee = Employee.objects.get(card_id = content['card_id'])
+        except:
+            status = 'denied'
+        else:
+            status = 'granted'
+        try:
+            self.socket_send(status)
         except:
             pass
         self.group_send('realtime',content)
 
-    def socket_send(self):
+    def socket_send(self,status):
         s = socket.socket()
         s.connect(("192.168.0.2", 1234))
-        s.send(b'granted')
+        s.send("b'"+ status +"'")
         s.close()
 
 
