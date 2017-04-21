@@ -41,6 +41,7 @@ class MyConsumer(JsonWebsocketConsumer):
         except:
             pass
         content['status'] = status
+        content['card_data'] = card_data
         self.group_send('realtime',content)
 
     def socket_send(self,status):
