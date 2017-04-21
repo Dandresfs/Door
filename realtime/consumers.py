@@ -1,4 +1,5 @@
 from channels.generic.websockets import JsonWebsocketConsumer
+import socket
 
 class MyConsumer(JsonWebsocketConsumer):
 
@@ -24,7 +25,15 @@ class MyConsumer(JsonWebsocketConsumer):
         Called when a message is received with decoded JSON content
         """
         # Simple echo
+        self.socket_send()
         self.group_send('realtime',content)
+
+    def socket_send(self):
+        s = socket.socket()
+        s.connect(("192.168.0.2", 1234))
+        s.send(b'granted')
+        s.close()
+
 
     def disconnect(self, message, **kwargs):
         """
