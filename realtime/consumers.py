@@ -25,7 +25,10 @@ class MyConsumer(JsonWebsocketConsumer):
         Called when a message is received with decoded JSON content
         """
         # Simple echo
-        self.socket_send()
+        try:
+            self.socket_send()
+        except:
+            pass
         self.group_send('realtime',content)
 
     def socket_send(self):
