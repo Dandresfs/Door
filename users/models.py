@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from Door.settings.base import STATIC_URL
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
@@ -55,6 +56,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.email
+
+    def get_photo(self):
+        avatar = STATIC_URL+"img/andes_user.jpg"
+        return avatar
 
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name + ' - ' + self.email

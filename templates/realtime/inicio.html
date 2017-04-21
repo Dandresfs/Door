@@ -1,5 +1,92 @@
 {% load staticfiles %}
-<!DOCTYPE html><html lang="es"><head><title>CONTROL DE ACCESO</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"/><script src="{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js'%}"></script><link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png'%}"/><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"/><link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css'%}"/><link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css'%}"/><link rel="stylesheet" href="{% static 'bower_components/normalize-css/normalize.css'%}"/><link rel="stylesheet" href="{% static 'css/base.css'%}"/></head><body><script src="{% static 'bower_components/jquery/dist/jquery.min.js'%}"></script><script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js'%}"></script><script src="{% static 'bower_components/reconnectingWebsocket/reconnecting-websocket.min.js'%}"></script><script>Notification.requestPermission();
+<!DOCTYPE html><html lang="es"><head><title>CONTROL DE ACCESO</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"/><script src="{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js'%}"></script><link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png'%}"/><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"/><link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css'%}"/><link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css'%}"/><link rel="stylesheet" href="{% static 'bower_components/normalize-css/normalize.css'%}"/><link rel="stylesheet" href="{% static 'css/base.css'%}"/><link rel="import" href="{% static 'bower_components/paper-drawer-panel/paper-drawer-panel.html'%}"/><link rel="import" href="{% static 'bower_components/paper-header-panel/paper-header-panel.html'%}"/><link rel="import" href="{% static 'bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html'%}"/><link rel="import" href="{% static 'bower_components/paper-toolbar/paper-toolbar.html'%}"/><link rel="import" href="{% static 'bower_components/paper-icon-button/paper-icon-button.html'%}"/><link rel="import" href="{% static 'bower_components/iron-icon/iron-icon.html'%}"/><link rel="import" href="{% static 'bower_components/iron-icons/iron-icons.html'%}"/><link rel="import" href="{% static 'bower_components/iron-icons/hardware-icons.html'%}"/><link rel="import" href="{% static 'bower_components/iron-icons/image-icons.html'%}"/><link rel="import" href="{% static 'bower_components/iron-icons/communication-icons.html'%}"/><link rel="import" href="{% static 'bower_components/image-mask/image-mask.html'%}"/><link rel="import" href="{% static 'bower_components/paper-menu/paper-menu.html'%}"/><link rel="import" href="{% static 'bower_components/paper-item/paper-item.html'%}"/><link rel="import" href="{% static 'bower_components/paper-item/paper-icon-item.html'%}"/><link rel="import" href="{% static 'bower_components/paper-item/paper-item-body.html'%}"/><link rel="import" href="{% static 'bower_components/iron-collapse/iron-collapse.html'%}"/><link rel="import" href="{% static 'bower_components/paper-toast/paper-toast.html'%}"/><link rel="import" href="{% static 'bower_components/paper-badge/paper-badge.html'%}"/><style is="custom-style">.icon-sican{
+   --iron-icon-height: 100px;
+   --iron-icon-width: 100px;
+   margin-right: 20px;
+}
+.toolbar-sican{
+  --paper-toolbar-background: #008000;
+  --paper-toolbar-title:{
+      font-weight: bold;
+  };
+}
+.toolbar-avatar{
+   --paper-toolbar-height: 70px;
+   --paper-toolbar-sm-height: 60px;
+   --paper-toolbar-background: #008000;
+}
+.toolbar-tools.paper-toolbar  > .title{
+   text-align: center;
+   margin-left: 0px;
+}
+#user-fullname{
+   font-size: 16px;
+}
+#user-email{
+   font-size: 14px;
+}
+#cuenta{
+  --paper-header-panel:{
+      background: #008000;
+  };
+}
+.paper-item-link{
+  color: inherit;
+  text-decoration: none;
+}
+.paper-icon-item-secondary-class{
+  color:white;
+}
+.paper-icon-item-class{
+  --paper-item:{
+      background:#F05623;
+      color:white;
+  };
+}
+#menu-user{
+  --paper-menu-background-color: #008000;
+  padding:0;
+}
+#collapse{
+  color:white;
+  background:#008000;
+}
+.submit{
+  --paper-button:{
+      background: #76b82a;
+      color: white;
+  }
+}
+.delete{
+  --paper-button:{
+      background: red;
+      color: white;
+  }
+}
+.return{
+  --paper-button:{
+      background: #004c99;
+      color: white;
+  }
+}
+.breadcrumb-paper-icon-item-class{
+  margin: 2px 0px;
+  color:white;
+  --paper-icon-item:{
+      background:#76b82a;
+      padding-bottom: 10px;
+      padding-top: 10px;
+  };
+}
+.breadcrum_active{
+  margin: 2px 0px;
+  color:white;
+  --paper-icon-item:{
+      background:#169fdb;
+      padding-bottom: 10px;
+      padding-top: 10px;
+  };
+}</style></head><body><paper-drawer-panel id="drawerPanel" responsive-width="1000px"><paper-header-panel mode="scroll" id="cuenta" drawer="drawer"><div class="container-fluid background-avatar"><div class="text-center"><div id="avatar"><image-mask shape="circle" size="158" src="{{user.get_photo}}"></image-mask></div></div></div><paper-menu id="menu-user" selected="0" selectable="paper-icon-item" on-iron-activate="menuSelect"><div role="listbox"><a href="#" class="link_button"><paper-item role="menuitem" id="avatar_menu" class="paper-icon-item-class"><paper-item-body two-line="two-line"><div>{{user.fullname}}</div><div secondary="secondary" class="paper-icon-item-secondary-class">{{user.email}}</div></paper-item-body><paper-icon-button icon="arrow-drop-down" id="avatar_icon"></paper-icon-button></paper-item></a><iron-collapse id="collapse"><div role="listbox"><a href="/logout/" class="paper-item-link"><paper-icon-item class="icon-hover"><iron-icon icon="icons:power-settings-new" item-icon="item-icon"></iron-icon>Cerrar sesión</paper-icon-item></a></div></iron-collapse>{% if inicio %}<paper-icon-item disabled="disabled" class="breadcrum_active">Inicio<iron-icon icon="check" item-icon="item-icon"></iron-icon></paper-icon-item>{% endif %}</div></paper-menu></paper-header-panel><paper-scroll-header-panel id="scrollheader" main="main" fixed="fixed"><paper-toolbar role="toolbar" class="toolbar-sican"><paper-icon-button id="navicon" icon="menu" paper-drawer-toggle="paper-drawer-toggle"></paper-icon-button><iron-icon src="{% static 'img/SICAN.svg'%}" class="icon-sican"></iron-icon><!--paper-icon-button(icon="communication:email",id="inbox")--><!--paper-badge(for="inbox",label="0",hidden,id="badge_chat")--></paper-toolbar><iron-collapse id="help"><div class="container-fluid"><div class="row"><div class="col-md-12"><div class="help_container"></div></div></div></div></iron-collapse><div class="container-fluid"><div class="realtime"></div></div><div style="margin-top:25px;"></div><input type="hidden" value="{{mensaje}}" id="input_mensaje"/><paper-toast id="toast_message" text="{{mensaje}}" duration="5000"></paper-toast></paper-scroll-header-panel></paper-drawer-panel><script src="{% static 'bower_components/jquery/dist/jquery.min.js'%}"></script><script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js'%}"></script><script src="{% static 'bower_components/reconnectingWebsocket/reconnecting-websocket.min.js'%}"></script><script>Notification.requestPermission();
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
 
@@ -12,4 +99,13 @@ socket.onmessage = function (e) {
 }
 
 socket.onopen = function () {
-}</script></body></html>
+}
+</script><script>$('#avatar_menu').on("click",function(event){
+    collapse.toggle();
+    if(collapse.opened){
+        avatar_icon.icon = "arrow-drop-up";
+    }
+    else{
+        avatar_icon.icon = "arrow-drop-down";
+    }
+});</script></body></html>
