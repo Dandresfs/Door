@@ -43,3 +43,6 @@ class LogoutView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         return redirect('/')
+
+class InicioView(TemplateView):
+    template_name = 'realtime/inicio.html'

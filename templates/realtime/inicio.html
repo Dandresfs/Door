@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<!DOCTYPE html><html lang="es"><head><title>CONTROL DE ACCESO</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"/><script src="{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js'%}"></script><link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png'%}"/><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"/><link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css'%}"/><link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css'%}"/><link rel="stylesheet" href="{% static 'bower_components/normalize-css/normalize.css'%}"/><link rel="stylesheet" href="{% static 'css/base.css'%}"/></head><body><script src="{% static 'bower_components/jquery/dist/jquery.min.js'%}"></script><script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js'%}"></script><script src="{% static 'bower_components/reconnectingWebsocket/reconnecting-websocket.min.js'%}"></script><script>Notification.requestPermission();
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
+
+socket.onmessage = function (e) {
+   var data = JSON.parse(e.data);
+   if(data.card_data != undefined){
+      var noti = new Notification( data.card_data );
+      setTimeout( function() { noti.close() }, 3000);
+   }
+}
+
+socket.onopen = function () {
+}</script></body></html>
