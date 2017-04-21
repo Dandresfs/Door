@@ -26,8 +26,9 @@ class MyConsumer(JsonWebsocketConsumer):
         Called when a message is received with decoded JSON content
         """
         # Simple echo
+        card_data = str(content['card_data'].replace("'","").replace("b'",""))
         try:
-            employee = Employee.objects.get(card_id = content['card_id'])
+            employee = Employee.objects.get(card_id = card_data)
         except:
             status = 'denied'
         else:
