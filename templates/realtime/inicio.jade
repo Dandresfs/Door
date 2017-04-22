@@ -194,11 +194,11 @@ block body_script
               var date = new Date();
               var date_string = date.toString();
               var extra = {
-                  icon: "/img/andes-icon.png",
+                  icon: window.location.origin + "/static/img/andes-icon.png",
                   body: date_string
               }
               var noti = new Notification( title, extra );
-              setTimeout( function() { noti.close() }, 3000);
+              setTimeout( function() { noti.close() }, 5000);
           }
        }
 
