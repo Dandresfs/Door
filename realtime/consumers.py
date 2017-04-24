@@ -36,6 +36,10 @@ class MyConsumer(JsonWebsocketConsumer):
                 status = 'granted'
                 content['first_name'] = employee.first_name
                 content['last_name'] = employee.last_name
+                content['cedula'] = employee.cedula
+                content['rh'] = employee.rh
+                content['cargo'] = employee.cargo
+                content['photo'] = employee.get_photo()
             else:
                 status = 'denied'
         try:

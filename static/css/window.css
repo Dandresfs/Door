@@ -1,0 +1,36 @@
+.img-logo{
+    height: 60vh;
+    margin: auto;
+    display: block;
+    margin-top: 8vh;
+}
+
+.datetime{
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.reloj{
+    margin-top: 8vh;
+}
+
+.img-modal{
+    padding: 5px;
+}
+
+.margin-row{
+    margin-top: 15px;
+}
+
+.bold-text{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.normal-text{
+    font-size: 24px;
+}
+
+.margin-row{
+    padding: 50px;
+}

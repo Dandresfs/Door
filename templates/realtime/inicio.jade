@@ -1,6 +1,6 @@
 extends ../base
 block title
-    |CONTROL DE ACCESO
+    |Control de ingreso
 block head_content
     link(rel="import",href="{% static 'bower_components/paper-drawer-panel/paper-drawer-panel.html'%}")
     link(rel="import",href="{% static 'bower_components/paper-header-panel/paper-header-panel.html'%}")
@@ -25,7 +25,7 @@ block head_content
 
     style(is="custom-style")
         |.icon-sican{
-        |    --iron-icon-height: 100px;
+        |    --iron-icon-height: 35px;
         |    --iron-icon-width: 100px;
         |    margin-right: 20px;
         |}
@@ -162,7 +162,7 @@ block body_content
         paper-scroll-header-panel(id="scrollheader",main,fixed)
             paper-toolbar(class="toolbar-sican",role="toolbar")
                 paper-icon-button(id="navicon",icon="menu",paper-drawer-toggle)
-                iron-icon(class="icon-sican",src="{% static 'img/SICAN.svg'%}")
+                iron-icon(class="icon-sican",src="{% static 'img/SICAN.png'%}")
                 //paper-icon-button(icon="communication:email",id="inbox")
                 //paper-badge(for="inbox",label="0",hidden,id="badge_chat")
                 block scroll_header_panel_buttons

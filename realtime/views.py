@@ -46,3 +46,6 @@ class LogoutView(TemplateView):
 
 class InicioView(TemplateView):
     template_name = 'realtime/inicio.html'
+
+class WindowView(TemplateView):
+    template_name = 'realtime/window.html'

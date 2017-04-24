@@ -1,0 +1,86 @@
+extends ../base
+block title
+    | Asoandes
+block head_content
+    link(rel="stylesheet",href="{% static 'css/window.css'%}")
+
+block body_content
+    div(class="container-fluid")
+        div(class="row")
+            img(src="{% static 'img/logo.png'%}",class="img-logo")
+        div(class="row reloj")
+            div(class="col-md-12 text-center")
+                p(class="datetime",id="fecha")
+                p(class="datetime",id="reloj")
+
+    div(class="modal fade",id="myModal",tabindex="-1",role="dialog")
+        div(class="modal-dialog modal-lg",role="document")
+            div(class="modal-content")
+                div(class="row")
+                    div(class="col-sm-5")
+                        img(id="avatar",src="",class="img-responsive",style="padding:40px;")
+                    div(class="col-sm-7")
+                        div(class="row margin-row")
+                            p(class="inline bold-text") Nombres:
+                                p(class="inline normal-text",id="nombres")
+                            p(class="inline bold-text") Apellidos:
+                                p(class="inline normal-text",id="apellidos")
+                            p(class="inline bold-text") Cedula:
+                                p(class="inline normal-text",id="cedula")
+                            p(class="inline bold-text") RH:
+                                p(class="inline normal-text",id="rh")
+                            p(class="inline bold-text") Cargo:
+                                p(class="inline normal-text",id="cargo")
+
+
+block body_script
+    script.
+        Notification.requestPermission();
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
+        socket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            if (data.status == "granted") {
+                $("#avatar").attr('src',data.photo)
+                $("#nombres").text(data.first_name)
+                $("#apellidos").text(data.last_name)
+                $("#cedula").text(data.cedula)
+                $("#rh").text(data.rh)
+                $("#cargo").text(data.cargo)
+
+                $('#myModal').modal('show');
+                setTimeout(function () {$('#myModal').modal('toggle');}, 4000);
+            }
+        }
+        socket.onopen = function () {
+        }
+
+    script.
+        function Reloj(){
+            var momentoActual = new Date();
+
+            var weekday = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado']
+            var day_of_week = weekday[momentoActual.getDay()];
+            var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+            var month = months[momentoActual.getMonth()];
+            var year = momentoActual.getFullYear();
+            var day = momentoActual.getDate();
+
+
+            var hora = momentoActual.getHours();
+            var ampm = hora >= 12 ? 'p.m.' : 'a.m.'
+            hora = hora % 12;
+            hora = hora ? hora : 12;
+            hora = hora.toLocaleString('es-CO', {minimumIntegerDigits: 2, useGrouping:false})
+
+            var minutos = momentoActual.getMinutes().toLocaleString('es-CO', {minimumIntegerDigits: 2, useGrouping:false});
+            var segundos = momentoActual.getSeconds().toLocaleString('es-CO', {minimumIntegerDigits: 2, useGrouping:false});
+
+
+            $("#fecha").text(day_of_week+" "+day+" de "+month+" del "+year);
+            $("#reloj").text(hora+":"+minutos+":"+segundos+" "+ampm);
+        }
+
+        window.onload = function() {
+            setInterval("Reloj()", 1000);
+        }
