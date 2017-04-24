@@ -1,3 +1,7 @@
+*{
+    cursor: none;
+}
+
 .img-logo{
     height: 60vh;
     margin: auto;
@@ -33,4 +37,8 @@
 
 .margin-row{
     padding: 50px;
+}
+
+.modal-center{
+    margin-top: 25vh;
 }
