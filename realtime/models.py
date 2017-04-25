@@ -15,6 +15,9 @@ class Employee(models.Model):
     status = models.CharField(max_length=100)
     photo = models.FileField(upload_to="Photos/",blank=True,null=True)
 
+    def __unicode__(self):
+        return self.first_name + " " + self.last_name
+
     def get_photo(self):
         photo = self.photo
         if photo.name == '':
