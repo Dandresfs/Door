@@ -11,9 +11,9 @@ socket.onmessage = function (e) {
         $("#cedula").text(data.cedula)
         $("#rh").text(data.rh)
         $("#cargo").text(data.cargo)
-
+        $('#myModal').modal('hide');
         $('#myModal').modal('show');
-        setTimeout(function () {$('#myModal').modal('toggle');}, 4000);
+        setTimeout(function () {$('#myModal').modal('hide');}, 4000);
     }
     if (data.status == "granted_reload"){
         window.location.reload();
