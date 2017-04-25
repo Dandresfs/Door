@@ -33,7 +33,7 @@ class MyConsumer(JsonWebsocketConsumer):
             status = 'denied'
         else:
             if employee.status == 'granted' or employee.status == "granted_reload":
-                status = 'granted'
+                status = employee.status
                 content['first_name'] = employee.first_name
                 content['last_name'] = employee.last_name
                 content['cedula'] = employee.cedula
