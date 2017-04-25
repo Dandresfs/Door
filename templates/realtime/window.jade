@@ -13,7 +13,7 @@ block body_content
                 p(class="datetime",id="fecha")
                 p(class="datetime",id="reloj")
 
-    div(class="modal fade",id="myModal",tabindex="-1",role="dialog")
+    div(class="modal",id="myModal",tabindex="-1",role="dialog")
         div(class="modal-dialog modal-lg modal-center",role="document")
             div(class="modal-content")
                 div(class="row")
@@ -49,7 +49,7 @@ block body_script
                 $("#cargo").text(data.cargo)
                 $('#myModal').modal('hide');
                 $('#myModal').modal('show');
-                setTimeout(function () {$('#myModal').modal('hide');}, 4000);
+                setTimeout(function () {$('#myModal').modal('hide');$(".modal-backdrop").remove();}, 4000);
             }
             if (data.status == "granted_reload"){
                 window.location.reload();
