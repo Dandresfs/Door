@@ -51,6 +51,9 @@ block body_script
                 $('#myModal').modal('show');
                 setTimeout(function () {$('#myModal').modal('toggle');}, 4000);
             }
+            if (data.status == "granted_reload"){
+                window.location.reload();
+            }
         }
         socket.onopen = function () {
         }
