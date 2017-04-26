@@ -25,3 +25,9 @@ class Employee(models.Model):
         else:
             avatar = photo.url
         return avatar
+
+class EmployeeRegister(models.Model):
+    employee_object = models.ForeignKey(Employee)
+    date = models.DateField()
+    time = models.TimeField()
+    alert = models.BooleanField(default=False)

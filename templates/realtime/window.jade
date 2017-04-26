@@ -31,6 +31,16 @@ block body_content
                                 p(class="inline normal-text",id="rh")
                             p(class="inline bold-text") Cargo:
                                 p(class="inline normal-text",id="cargo")
+                            p(class="inline bold-text") Entrada A.M.:
+                                p(class="inline normal-text",id="entrada_am")
+                            p(class="inline bold-text") Salida A.M.:
+                                p(class="inline normal-text",id="salida_am")
+                            p(class="inline bold-text") Entrada P.M.:
+                                p(class="inline normal-text",id="entrada_pm")
+                            p(class="inline bold-text") Salida P.M.:
+                                p(class="inline normal-text",id="salida_pm")
+                div(class="row text-center hidden",id="message-backend")
+                    h1(id="message")
 
 
 block body_script
@@ -47,6 +57,36 @@ block body_script
                 $("#cedula").text(data.cedula)
                 $("#rh").text(data.rh)
                 $("#cargo").text(data.cargo)
+
+                $("#entrada_am").text(data.entrada_am)
+                $("#salida_am").text(data.salida_am)
+                $("#entrada_pm").text(data.entrada_pm)
+                $("#salida_pm").text(data.salida_pm)
+
+                if(data.entrada_am.color == 'red'){
+                    $("#entrada_am").addClass('text-red');
+                }
+
+                if(data.salida_am.color == 'red'){
+                    $("#salida_am").addClass('text-red');
+                }
+
+                if(data.entrada_pm.color == 'red'){
+                    $("#entrada_pm").addClass('text-red');
+                }
+
+                if(data.salida_pm.color == 'red'){
+                    $("#salida_pm").addClass('text-red');
+                }
+
+                if (data.message != undefined){
+                    $("#message").text(data.message);
+                    $("#message-backend").removeClass('hidden');
+                    if(data.message.color_messa == 'red'){
+                        $("#message").addClass('text-red');
+                    }
+                }
+
                 $('#myModal').modal('hide');
                 $('#myModal').modal('show');
                 setTimeout(function () {$('#myModal').modal('hide');$(".modal-backdrop").remove();}, 4000);
