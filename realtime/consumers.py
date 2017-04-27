@@ -287,7 +287,7 @@ class MyConsumer(JsonWebsocketConsumer):
 
 
     def socket_send(self,status):
-        s = socket.socket()
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("0.0.0.0", 1234))
         s.send(status.encode())
         s.close()
