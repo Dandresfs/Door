@@ -6,6 +6,7 @@ from realtime.models import Employee, EmployeeRegister
 from django.utils import timezone
 from django.db.models import Q
 from datetime import datetime, date, timedelta
+import time
 
 class MyConsumer(JsonWebsocketConsumer):
 
@@ -20,6 +21,8 @@ class MyConsumer(JsonWebsocketConsumer):
             'afternoon':{'in':datetime.strptime('14:00:00','%H:%M:%S').time(),'out':datetime.strptime('18:00:00','%H:%M:%S').time()},
             'last_afternoon':{'in':datetime.strptime('18:00:00','%H:%M:%S').time(),'out':datetime.strptime('23:59:59','%H:%M:%S').time()},
         }
+
+    state = 'free'
 
     def connection_groups(self, **kwargs):
         """
@@ -64,14 +67,13 @@ class MyConsumer(JsonWebsocketConsumer):
 
             else:
                 status = 'denied'
-        try:
-            self.socket_send(status)
-        except:
-            pass
+
         content['status'] = status
         content['card_data'] = card_data
 
+
         self.group_send('realtime',content)
+
 
     def get_pivot(self,employee,inp,output,order):
 
@@ -284,13 +286,6 @@ class MyConsumer(JsonWebsocketConsumer):
             return ['','black']
 
 
-
-
-    def socket_send(self,status):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(("0.0.0.0", 1234))
-        s.send(status.encode())
-        s.close()
 
 
     def disconnect(self, message, **kwargs):
