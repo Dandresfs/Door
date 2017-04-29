@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.db.models import Q
 from datetime import datetime, date, timedelta
 import time
+import json
 
 class MyConsumer(JsonWebsocketConsumer):
 
@@ -35,7 +36,7 @@ class MyConsumer(JsonWebsocketConsumer):
         """
         Perform things on connection start
         """
-        self.message.reply_channel.send({"accept": True})
+        self.message.reply_channel.send({"text": json.dumps({"accept": True})})
 
     def receive(self, content, **kwargs):
         """
