@@ -17,6 +17,7 @@ block body_content
                     li(id="min")
                     li(id="point") :
                     li(id="sec")
+                    li(id="ampm")
 
     div(class="modal",id="myModal",tabindex="-1",role="dialog")
         div(class="modal-dialog modal-lg modal-center",role="document")
@@ -131,7 +132,11 @@ block body_script
             setInterval(function () {
                 // Create a newDate() object and extract the hours of the current time on the visitor's
                 var hours = new Date().getHours();
+                var ampm = hours >= 12 ? 'p.m.' : 'a.m.'
+                hours = hours % 12;
+                hours = hours ? hours : 12;
                 // Add a leading zero to the hours value
                 $("#hours").html(( hours < 10 ? "0" : "" ) + hours);
+                $("#ampm").html(" "+ampm);
             }, 1000);
         });
