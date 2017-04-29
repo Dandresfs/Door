@@ -74,6 +74,7 @@ class MyConsumer(JsonWebsocketConsumer):
 
 
         self.group_send('realtime',content)
+        self.group_send('realtime',{"text": content})
 
 
     def get_pivot(self,employee,inp,output,order):
