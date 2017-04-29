@@ -47,6 +47,7 @@ block body_script
     script.
         Notification.requestPermission();
         $('body').css('cursor', 'none');
+        $('body').css('cursor', 'none');
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
         socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/realtime/");
         socket.onmessage = function (e) {
