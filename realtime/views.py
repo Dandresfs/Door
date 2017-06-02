@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from realtime.models import Employee
+import time
+import RPi.GPIO as GPIO
 
 class LoginView(TemplateView):
     template_name = 'realtime/login.html'
@@ -60,8 +62,43 @@ class StatusView(APIView):
     """
     List all snippets, or create a new snippet.
     """
+
+    green = 24
+    red = 23
+    relay = 18
+    delay = 2
+
+    def setup(self):
+        GPIO.setwarnings(False)
+        GPIO.cleanup()
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.green, GPIO.OUT)
+        GPIO.setup(self.red, GPIO.OUT)
+        GPIO.setup(self.relay, GPIO.OUT)
+
+    def handle(self, status):
+        if status == "granted":
+            self.signal_gpio(self.green,True)
+            self.signal_gpio(self.red,False)
+            self.signal_gpio(self.relay,True)
+
+        elif status == "close":
+            self.signal_gpio(self.green,False)
+            self.signal_gpio(self.red,False)
+            self.signal_gpio(self.relay,False)
+
+        elif status == "denied":
+            self.signal_gpio(self.green,False)
+            self.signal_gpio(self.red,True)
+            self.signal_gpio(self.relay,False)
+
+
+    def signal_gpio(self, gpio, status):
+        GPIO.output(gpio, status)
+
     def post(self, request, format=None):
 
+        self.setup()
         status = 'denied'
 
         if 'card_data' in request.data.keys():
@@ -69,9 +106,15 @@ class StatusView(APIView):
             try:
                 employee = Employee.objects.get(card_id = request.data['card_data'])
             except:
-                pass
+                self.handle('denied')
+                time.sleep(2)
+                self.handle('close')
             else:
                 if employee.status == 'granted' or employee.status == "granted_reload":
                     status = 'granted'
+                    self.handle('granted')
+                    time.sleep(2)
+                    self.handle('close')
 
         return Response({'status':status})
+
