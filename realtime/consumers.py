@@ -16,11 +16,11 @@ class MyConsumer(JsonWebsocketConsumer):
     strict_ordering = False
 
     range_work = {
-            'before_morning':{'in':datetime.strptime('00:00:00','%H:%M:%S').time(),'out':datetime.strptime('08:00:00','%H:%M:%S').time()},
-            'morning':{'in':datetime.strptime('08:00:00','%H:%M:%S').time(),'out':datetime.strptime('12:30:00','%H:%M:%S').time()},
-            'lunch':{'in':datetime.strptime('12:30:00','%H:%M:%S').time(),'out':datetime.strptime('14:00:00','%H:%M:%S').time()},
-            'afternoon':{'in':datetime.strptime('14:00:00','%H:%M:%S').time(),'out':datetime.strptime('18:00:00','%H:%M:%S').time()},
-            'last_afternoon':{'in':datetime.strptime('18:00:00','%H:%M:%S').time(),'out':datetime.strptime('23:59:59','%H:%M:%S').time()},
+            'before_morning':{'in':datetime.strptime('00:00:00','%H:%M:%S').time(),'out':datetime.strptime('07:30:00','%H:%M:%S').time()},
+            'morning':{'in':datetime.strptime('07:30:00','%H:%M:%S').time(),'out':datetime.strptime('12:00:00','%H:%M:%S').time()},
+            'lunch':{'in':datetime.strptime('12:00:00','%H:%M:%S').time(),'out':datetime.strptime('13:30:00','%H:%M:%S').time()},
+            'afternoon':{'in':datetime.strptime('13:30:00','%H:%M:%S').time(),'out':datetime.strptime('17:30:00','%H:%M:%S').time()},
+            'last_afternoon':{'in':datetime.strptime('17:30:00','%H:%M:%S').time(),'out':datetime.strptime('23:59:59','%H:%M:%S').time()},
         }
 
     state = 'free'
@@ -71,9 +71,20 @@ class MyConsumer(JsonWebsocketConsumer):
 
         content['status'] = status
         content['card_data'] = card_data
+        self.socket_send(status)
+
 
 
         self.group_send('realtime',content)
+
+
+    def socket_send(self,status):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("localhost", 1234))
+        s.send(status.encode())
+        received = s.recv(1024)
+        s.close()
+        return received
 
 
     def get_pivot(self,employee,inp,output,order):
