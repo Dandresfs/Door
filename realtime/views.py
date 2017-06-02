@@ -3,6 +3,10 @@
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
+from realtime.models import Employee
 
 class LoginView(TemplateView):
     template_name = 'realtime/login.html'
@@ -49,3 +53,25 @@ class InicioView(TemplateView):
 
 class WindowView(TemplateView):
     template_name = 'realtime/window.html'
+
+
+
+class StatusView(APIView):
+    """
+    List all snippets, or create a new snippet.
+    """
+    def post(self, request, format=None):
+
+        status = 'denied'
+
+        if 'card_data' in request.data.keys():
+
+            try:
+                employee = Employee.objects.get(card_id = request.data['card_data'])
+            except:
+                pass
+            else:
+                if employee.status == 'granted' or employee.status == "granted_reload":
+                    status = 'granted'
+
+        return Response({'status':status})

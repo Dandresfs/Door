@@ -71,20 +71,9 @@ class MyConsumer(JsonWebsocketConsumer):
 
         content['status'] = status
         content['card_data'] = card_data
-        self.socket_send(status)
-
 
 
         self.group_send('realtime',content)
-
-
-    def socket_send(self,status):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(("localhost", 1234))
-        s.send(status.encode())
-        received = s.recv(1024)
-        s.close()
-        return received
 
 
     def get_pivot(self,employee,inp,output,order):
