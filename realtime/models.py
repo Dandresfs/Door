@@ -33,4 +33,4 @@ class EmployeeRegister(models.Model):
     alert = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.employee_object
+        return self.employee_object.__unicode__()
