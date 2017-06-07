@@ -31,3 +31,6 @@ class EmployeeRegister(models.Model):
     date = models.DateField()
     time = models.TimeField()
     alert = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.employee_object
