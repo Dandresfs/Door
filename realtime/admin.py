@@ -3,4 +3,8 @@ from realtime.models import Employee, EmployeeRegister
 # Register your models here.
 
 admin.site.register(Employee)
-admin.site.register(EmployeeRegister)
+
+class EmployeeRegisterAdmin(admin.ModelAdmin):
+    list_display  = ('employee_object','date','time','alert')
+
+admin.site.register(EmployeeRegister,EmployeeRegisterAdmin)
